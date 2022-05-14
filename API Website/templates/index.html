@@ -1,0 +1,62 @@
+<html>
+  <head>
+    <title>{% block title %} Home {%endblock%}</title>
+    {% extends 'base.html' %} {% block content %}
+    <style>
+      .headie {
+        text-align: center;
+        font-family: fantasy;
+        margin: auto;
+      }
+      .break {
+        height: 10%;
+      }
+      /* .apod-div {
+        background: chartreuse;
+        margin: 16px 15% 15px 15%;
+        display: flex;
+      } */
+      .apod {
+        float: left;
+        color: black;
+        text-decoration: none;
+        margin: -1px 0% 15px 15%;
+      }
+
+      .link-name {
+        font-family: Georgia, "Times New Roman", Times, serif;
+      }
+      .mars-rov {
+        float: right;
+        text-decoration: none;
+        margin: 0 14% 15px 0%;
+        text-align: center;
+        color: black;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="break">
+      <br />
+    </div>
+    <h1 class="headie">Welcome to a breakdown of photos from NASA's API!</h1>
+    <div class="break">
+      <br />
+    </div>
+
+    <span>
+      <a class="apod" href="{{ url_for('apod') }}"
+        ><i class="fa-solid fa-satellite fa-3x"></i>
+        <br />
+        <p class="link-name">APOD</p></a
+      >
+
+      <a class="mars-rov" href="{{ url_for('mars_rover') }}"
+        ><i class="fa-solid fa-camera-retro fa-3x mars-link"></i>
+        <br />
+        <p class="link-name">Mars Rover Photos</p>
+      </a>
+    </span>
+  </body>
+  {%endblock%}
+</html>

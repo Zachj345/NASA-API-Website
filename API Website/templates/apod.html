@@ -1,0 +1,124 @@
+<html>
+  <head>
+    <title>{% block title %} Astronomy Picture of the Day {%endblock%}</title>
+    {% extends 'base.html' %} {% block content %}
+    <style>
+      .headie {
+        text-align: center;
+        font-family: fantasy;
+      }
+      .break {
+        height: 12%;
+      }
+
+      .date-entry {
+        width: 45vw;
+        margin-left: 5%;
+        min-width: 300px;
+        z-index: 0;
+      }
+      .response {
+        width: 60vw;
+        z-index: 3;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+      .response figure img {
+        margin: auto;
+        width: 55vw;
+        margin: 0px 10px 10px 10px;
+        max-height: 800px;
+        border: solid black 2px;
+      }
+      .response figcaption {
+        margin: 10px;
+        text-align: center;
+      }
+      .picture-information {
+        margin: auto;
+        float: left;
+        width: 40%;
+        z-index: 0;
+        min-width: 325px;
+      }
+      .description {
+        margin: 40px 45px;
+      }
+      .text {
+        font-family: Verdana, Geneva, Tahoma, sans-serif;
+      }
+      .pic-btn {
+        z-index: -4;
+      }
+      .zoom-container {
+        margin: auto;
+
+        width: 100vw;
+        height: 85vh;
+        top: 0;
+        bottom: 0;
+        right: 0;
+        left: 0;
+
+        z-index: 26;
+      }
+      .medium-zoom-overlay {
+        position: fixed;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        background-color: "#292f38";
+        opacity: 0;
+        transition: opacity 300ms;
+        will-change: opacity;
+      }
+    </style>
+  </head>
+  <body>
+    <h1 class="headie">Welcome to the Astronomy Picture of the day!</h1>
+    <div class="break">
+      <br />
+    </div>
+    <form method="POST" action="/apod-api" onsubmit="return searchAPI();">
+      <div class="input-group mb-3 date-entry">
+        <input
+          min="1995-06-16"
+          name="date"
+          type="date"
+          id="date"
+          value="{{info['date']}}"
+          class="form-control"
+          aria-describedby="button-addon2"
+        />
+        <button
+          class="btn btn-success pic-btn"
+          type="submit"
+          id="button-addon2"
+        >
+          Get Picture
+        </button>
+      </div>
+    </form>
+
+    <br />
+    <br />
+    <div class="zoom-container" id="zoom">
+      <div class="picture-information">
+        <p class="description">{{info['explanation']}}</p>
+      </div>
+      <div class="response">
+        <figure>
+          <img class="pic" src="{{info['url']}}" alt="The picture of the day" />
+          <figcaption class="text">
+            {{info['title']}}, &nbsp;&nbsp; {{info['date']}}
+          </figcaption>
+          <br />
+        </figure>
+      </div>
+    </div>
+    <script src="{{url_for('static', filename='refresh.js')}}"></script>
+  </body>
+  {%endblock%}
+</html>

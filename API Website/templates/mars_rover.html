@@ -1,0 +1,171 @@
+<html>
+  <head>
+    <title>{% block title %} Mars Rover Photos {%endblock%}</title>
+    {% extends 'base.html' %} {% block content %}
+
+    <style>
+      .headie {
+        text-align: center;
+        font-family: fantasy;
+        margin: 0% 8%;
+      }
+      .break {
+        height: 7%;
+      }
+
+      .date-entry {
+        width: 45%;
+        margin-left: 5%;
+        min-width: 300px;
+        z-index: 0;
+      }
+      .parent {
+        padding: 20px;
+        width: 100%;
+        margin: auto;
+        position: relative;
+      }
+      .pictures {
+        display: flex;
+        flex-wrap: wrap;
+      }
+      .pictures figure {
+        margin: 2% 4%;
+
+        flex: 1 1 240px;
+        width: 25%;
+        height: 39%;
+        position: relative;
+      }
+      .pictures figure img {
+        width: 100%;
+
+        max-height: 40vh;
+        object-fit: cover;
+        border: solid black 2px;
+        display: block;
+      }
+      .pictures figcaption {
+        text-align: center;
+        align-items: center;
+        margin: 0 1%;
+      }
+
+      .pics:hover {
+        transform: scale(1.035);
+      }
+      .medium-zoom-overlay {
+        position: fixed;
+
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        background-color: "#292f38";
+        opacity: 0;
+        transition: opacity 300ms;
+        will-change: opacity;
+      }
+      .big-break {
+        height: 20vh;
+      }
+      .pictures figure.hide {
+        display: none;
+      }
+      .pictures figure.show {
+        display: block;
+        animation: show 0.5s ease;
+      }
+      @keyframes show {
+        0% {
+          opacity: 0;
+          transform: scale(0.9);
+        }
+        100% {
+          opacity: 1;
+          transform: scale(1);
+        }
+      }
+      .pagination {
+        margin: 30px 36vw;
+        z-index: 0;
+      }
+
+      .pagination .buttons button.prev {
+        border-radius: 25px 5px 5px 25px;
+        cursor: pointer;
+      }
+      .pagination .buttons button.next {
+        border-radius: 5px 25px 25px 5px;
+        cursor: pointer;
+      }
+    </style>
+  </head>
+  <body>
+    <h1 class="headie">Welcome to NASA's Mars Rover API!</h1>
+    <div class="break">
+      <br />
+    </div>
+
+    <form method="POST">
+      <div class="input-group mb-3 date-entry">
+        <input
+          min="2014-01-03"
+          name="earth_date"
+          type="date"
+          value="{{ info['date'] }}"
+          class="form-control"
+          aria-describedby="button-addon2"
+        />
+        <button
+          class="btn btn-success pic-btn"
+          type="submit"
+          id="button-addon2"
+        >
+          Get Mars Pictures
+        </button>
+      </div>
+    </form>
+    <br />
+    <br />
+    <br />
+
+    <section class="parent">
+      <div class="pictures">
+        {% for photo in info %}
+        <figure class="fig-container">
+          <img src="{{ photo['img_src'] }} " alt="Mars picture" class="pics" />
+          <figcaption>
+            {{photo['camera']['full_name']}}, &nbsp; {{photo['earth_date']}}
+          </figcaption>
+          <br />
+          <br />
+          <br />
+        </figure>
+        {% endfor %}
+      </div>
+
+      <br />
+      <br />
+    </section>
+    <div class="pagination fixed-bottom">
+      <div class="btn-group buttons" role="group" aria-label="Basic example">
+        <button type="button" class="btn btn-secondary prev">
+          <span><i class="fas fa-angle-left"></i> Prev </span>
+        </button>
+        <button
+          type="button"
+          class="btn btn-secondary page-number disabled"
+        ></button>
+        <button type="button" class="btn btn-secondary next">
+          <span>Next <i class="fas fa-angle-right"></i></span>
+        </button>
+      </div>
+    </div>
+    <script
+      type="module"
+      src="{{url_for('static', filename='pagination.js')}}"
+    ></script>
+  </body>
+  {%endblock%}
+</html>
